@@ -24,12 +24,16 @@ cd /github/workspace
 # Debug output for GitHub Actions workspace mount and git repo visibility
 echo "DEBUG: pwd=$(pwd)"
 echo "DEBUG: id=$(id)"
-echo "DEBUG: GITHUB_WORKSPACE=${GITHUB_WORKSPACE:-}"\
+echo "DEBUG: GITHUB_WORKSPACE=${GITHUB_WORKSPACE:-}"
+echo "DEBUG: GIT_DIR=${GIT_DIR:-}"
+echo "DEBUG: GIT_WORK_TREE=${GIT_WORK_TREE:-}"
+echo "DEBUG: GIT_COMMON_DIR=${GIT_COMMON_DIR:-}"
+env | sort | grep '^GIT_' | sed 's/^/DEBUG: /' || true
 
 if [ -e .git ]; then
   echo "DEBUG: .git exists in /github/workspace"
   ls -ld .git || true
-  find .git -maxdepth 2 -type f -o -type d | sed 's/^/DEBUG: /'
+  find .git -maxdepth 2 \( -type f -o -type d \) | sed 's/^/DEBUG: /'
   if [ -f .git/HEAD ]; then
     echo "DEBUG: .git/HEAD content:"
     sed 's/^/DEBUG: /' .git/HEAD || true
