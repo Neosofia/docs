@@ -61,12 +61,31 @@ function check_git() {
         return 1
     fi
 
-    if [ -z "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
-        echo "Not inside a Git repository. WARN: Skipping advanced features."
-        return 1
+    if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        return 0
     fi
 
-    return 0
+    # At runtime inside a container, the mounted repo may not be auto-detected.
+    # This fallback belongs here in the runtime script, not in the Dockerfile.
+    # We try the GH Actions workspace first, then the current working directory.
+    if [ -n "${GITHUB_WORKSPACE:-}" ] && [ -d "$GITHUB_WORKSPACE/.git" ]; then
+        if git --git-dir="$GITHUB_WORKSPACE/.git" --work-tree="$GITHUB_WORKSPACE" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+            export GIT_DIR="$GITHUB_WORKSPACE/.git"
+            export GIT_WORK_TREE="$GITHUB_WORKSPACE"
+            return 0
+        fi
+    fi
+
+    if [ -n "${PWD:-}" ] && [ -d "$PWD/.git" ]; then
+        if git --git-dir="$PWD/.git" --work-tree="$PWD" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+            export GIT_DIR="$PWD/.git"
+            export GIT_WORK_TREE="$PWD"
+            return 0
+        fi
+    fi
+
+    echo "Not inside a Git repository. WARN: Skipping advanced features."
+    return 1
 }
 
 function utc_date_from_epoch() {

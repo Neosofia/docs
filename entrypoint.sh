@@ -19,6 +19,8 @@ LOGO_PATH="${8:-${LOGO_PATH:-}}"
 
 export COMPANY DISCLAIMER WATERMARK WEBSITE_BASE_DIR WEBSITE_BASE_URL SCCS_BASE_URL LOGO_PATH
 
+# Keep this entrypoint thin. Runtime repo detection and git fallback
+# logic belong inside generate.bash, not hard-coded into the Dockerfile.
 cd /github/workspace
 
 exec bash "$ACTION_DIR/generate.bash" "$DIRECTORY"
