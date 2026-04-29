@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+
+if [ "${1:-}" = "--local" ]; then
+  shift
+  if [ -f "$PWD/.env" ]; then
+    set -a
+    source "$PWD/.env"
+    set +a
+  fi
+  exec bash "$ROOT_DIR/generate.bash" "$@"
+fi
+
+if [ "${BYPASS_DOCKER:-}" = "1" ]; then
+  if [ -f "$PWD/.env" ]; then
+    set -a
+    source "$PWD/.env"
+    set +a
+  fi
+  exec bash "$ROOT_DIR/generate.bash" "$@"
+fi
+
+ENV_FILE_ARG=""
+if [ -f "$PWD/.env" ]; then
+  ENV_FILE_ARG="--env-file=$PWD/.env"
+elif [ -f "$ROOT_DIR/.env" ]; then
+  ENV_FILE_ARG="--env-file=$ROOT_DIR/.env"
+fi
+
+docker build -t neosofia-docs "$ROOT_DIR"
+
+docker run --rm \
+  $ENV_FILE_ARG \
+  -v "$PWD":/github/workspace \
+  -w /github/workspace \
+  neosofia-docs "$@"

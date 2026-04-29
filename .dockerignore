@@ -1,0 +1,12 @@
+*
+!.dockerignore
+!Dockerfile
+!action.yml
+!entrypoint.sh
+!generate.bash
+!header-template.latex
+!package.json
+!bin/
+!README.md
+!README.pdf
+!.env.example

@@ -1,0 +1,5 @@
+200
+sha256:f9c6a2fd2ddbc23e336b6257a5245e31f996953ef06cd13a59fa0a1df2d5c252
+application/vnd.oci.image.index.v1+json
+15
+[({'architecture': 'amd64', 'os': 'linux'}, 'sha256:5a2a80d11944804c01b8619bc967e31801ec39bf3257ab80b91070eb23625644'), ({'architecture': 'unknown', 'os': 'unknown'}, 'sha256:5101d2ceb0c6fe92da0f0dbe716a5d2fef5b00c21b04213a8fda203e41364110'), ({'architecture': 'arm', 'os': 'linux', 'variant': 'v5'}, 'sha256:07d93b59fdabf11d75439aaf4f4b83716c9afabcdbc6947d1248b864fa00a3cc'), ({'architecture': 'unknown', 'os': 'unknown'}, 'sha256:52b693d3de1c09b6b57bacd3da623aaafe82d64db96c97d83574a9a43cdb61cd'), ({'architecture': 'arm', 'os': 'linux', 'variant': 'v7'}, 'sha256:c819d327c52fae12b87b73d31ac82f519061ad24a84c1cd62dfb959eea5c5357')]

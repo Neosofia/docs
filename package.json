@@ -1,0 +1,21 @@
+{
+  "name": "@neosofia/docs-generator",
+  "version": "0.1.0",
+  "description": "QMS PDF document generation package and GitHub Action.",
+  "private": false,
+  "bin": {
+    "neosofia-docs": "bin/generate-docs"
+  },
+  "scripts": {
+    "docker:build": "docker build -t neosofia-docs ."
+  },
+  "keywords": [
+    "docs",
+    "qms",
+    "pandoc",
+    "latex",
+    "github-action"
+  ],
+  "author": "Neosofia",
+  "license": "Apache-2.0"
+}

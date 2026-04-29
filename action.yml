@@ -1,0 +1,51 @@
+name: Generate QMS PDFs
+
+description: |
+  Container action that generates PDF documents from markdown using Pandoc and XeLaTeX.
+  It is designed to run inside a GitHub Actions workflow and can also be used locally
+  via Docker.
+
+author: Neosofia
+
+inputs:
+  directory:
+    description: 'Markdown source directory relative to the repository root.'
+    required: true
+  company:
+    description: 'Company name used in generated documents.'
+    required: false
+    default: 'ACME CORPORATION'
+  disclaimer:
+    description: 'Disclaimer text added to generated documents.'
+    required: false
+    default: 'This document is for internal use only.'
+  watermark:
+    description: 'Watermark text in generated PDFs.'
+    required: false
+    default: 'Official Copy'
+  website-base-dir:
+    description: 'Base directory used when rewriting local markdown links.'
+    required: false
+    default: '/'
+  website-base-url:
+    description: 'Public website base URL for rewritten links.'
+    required: false
+  sccs-base-url:
+    description: 'Source control commit URL prefix for changelog links.'
+    required: false
+  logo-path:
+    description: 'Path to the logo file to use on the title page.'
+    required: false
+
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.directory }}
+    - ${{ inputs.company }}
+    - ${{ inputs.disclaimer }}
+    - ${{ inputs.watermark }}
+    - ${{ inputs.website-base-dir }}
+    - ${{ inputs.website-base-url }}
+    - ${{ inputs.sccs-base-url }}
+    - ${{ inputs.logo-path }}
