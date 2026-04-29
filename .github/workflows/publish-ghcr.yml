@@ -29,5 +29,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/Neosofia/docs:latest
-            ghcr.io/Neosofia/docs:${{ github.sha }}
+            ghcr.io/neosofia/docs:latest
+            ghcr.io/neosofia/docs:${{ github.sha }}
