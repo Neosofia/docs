@@ -21,6 +21,6 @@ export COMPANY DISCLAIMER WATERMARK WEBSITE_BASE_DIR WEBSITE_BASE_URL SCCS_BASE_
 
 # Keep this entrypoint thin. Runtime repo detection and git fallback
 # logic belong inside generate.bash, not hard-coded into the Dockerfile.
-cd /github/workspace
+cd "${GITHUB_WORKSPACE:-/workspace}"
 
 exec bash "$ACTION_DIR/generate.bash" "$DIRECTORY"

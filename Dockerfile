@@ -2,11 +2,12 @@ FROM debian:bookworm-slim@sha256:f9c6a2fd2ddbc23e336b6257a5245e31f996953ef06cd13
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Container action must write into the mounted GitHub workspace.
-# In GitHub Actions, /github/workspace is mounted from the runner and is
-# typically owned by root inside the container. This image is ephemeral and
-# only used in CI, so we run as root here to allow workspace writes and to
-# avoid non-root permission failures when generating PDFs.
+# Container image must write into the mounted workspace.
+# We use a generic runtime working directory and reserve GH Actions-specific
+# workspace mounting behavior for runtime detection, not image structure.
+# This image is ephemeral and only used in CI, so we run as root here to
+# allow workspace writes and to avoid non-root permission failures when
+# generating PDFs.
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
     ca-certificates \
@@ -24,7 +25,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && chmod 1777 /tmp \
   && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /github/workspace
+WORKDIR /workspace
 COPY . /action
 RUN chmod +x /action/entrypoint.sh /action/generate.bash
 
