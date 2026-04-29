@@ -18,7 +18,7 @@ docker build -t neosofia-docs .
 Generate documents from a repository directory:
 
 ```bash
-docker run --rm -v "$PWD":/github/workspace -w /github/workspace neosofia-docs qms
+docker run --rm -v "$PWD":/workspace -w /workspace neosofia-docs qms
 ```
 
 If this package is installed as a dependency in another repo, use the helper CLI:
@@ -61,8 +61,8 @@ Run the container:
 ```bash
 docker run --rm \
   --env-file .env \
-  -v "$PWD":/github/workspace \
-  -w /github/workspace \
+  -v "$PWD":/workspace \
+  -w /workspace \
   neosofia-docs qms
 ```
 

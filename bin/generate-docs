@@ -33,6 +33,6 @@ docker build -t neosofia-docs "$ROOT_DIR"
 
 docker run --rm \
   $ENV_FILE_ARG \
-  -v "$PWD":/github/workspace \
-  -w /github/workspace \
+  -v "$PWD":/workspace \
+  -w /workspace \
   neosofia-docs "$@"
