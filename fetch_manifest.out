@@ -1,5 +1,0 @@
-200
-Traceback (most recent call last):
-  File "/Users/benyoung/projects/neosofia/docs/fetch_manifest.py", line 11, in <module>
-    print(resp.getheader(Docker-Content-Digest))
-NameError: name 'Docker' is not defined
