@@ -17,20 +17,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     fonts-inter \
   && groupadd -r docs \
   && useradd -r -g docs -d /home/docs -m docs \
-  && rm -rf /var/lib/apt/lists/*
-
-RUN groupadd -r docs && useradd -r -g docs -d /home/docs -m docs \
   && mkdir -p /tmp /home/docs/.cache/fontconfig \
   && chmod 1777 /tmp \
-  && chown -R docs:docs /home/docs
+  && chown -R docs:docs /home/docs \
+  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /github/workspace
 COPY . /action
 RUN chmod +x /action/entrypoint.sh /action/generate.bash \
   && chown -R docs:docs /action
 
-ENV HOME=/root
+ENV HOME=/home/docs
 ENV XDG_CACHE_HOME=/tmp
 ENV FONTCONFIG_PATH=/tmp/fontconfig
 
+USER docs
 ENTRYPOINT ["/action/entrypoint.sh"]
